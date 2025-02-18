@@ -1,2 +1,18 @@
 server:
   port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/movies
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://localhost:5432/movies
+    user: postgres
+    password: postgres
+    schemas: public
+    locations: classpath:db-migration
+    baseline-on-migrate: true
