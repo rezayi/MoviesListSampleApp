@@ -6,12 +6,12 @@ import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 import sample.mrezaei.movies.data.entities.MovieEntity;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * This class includes some methods to customize Movies Specification class to handle dynamic filtering
+ */
 public class MovieSpecification {
-
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public static Specification<MovieEntity> searchByTitleQuery(String title) {
         return (Root<MovieEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) ->

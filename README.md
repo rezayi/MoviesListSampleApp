@@ -6,10 +6,11 @@
 - implement APIs
 - add db migration
 - add swagger
-
+- validate inputs
+- authentication
+- exception handling
 
 ### TODO:
-- validate inputs
 - implement unit tests
 - implement integration test
 - fill poster urls

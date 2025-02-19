@@ -1,10 +1,3 @@
-DO $$
-    BEGIN
-        IF EXISTS (SELECT 1 FROM movies LIMIT 1) THEN
-            RETURN;
-        END IF;
-    END $$;
-
 -- Action Movies
 insert into movies (id, title, release_date, poster_url, overview, genres, runtime_minutes, language,
                     rating_score,
