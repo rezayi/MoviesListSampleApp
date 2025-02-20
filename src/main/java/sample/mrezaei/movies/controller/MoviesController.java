@@ -6,10 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.validation.annotation.Validated;
@@ -35,7 +32,7 @@ public class MoviesController {
 
     @Operation(
             summary = "Get popular movies",
-            description = "Returns list of popular movies."
+            description = "Returns list of popular movies. page numbers are in 1-based system."
     )
     @GetMapping("popular")
     public List<MovieListResponse> getPopularMovies(
@@ -43,6 +40,7 @@ public class MoviesController {
                     description = "page number",
                     required = false
             )
+            @Min(1)
             @RequestParam(required = false) Integer page
     ) {
         return moviesService.getPopularMovies(page);
@@ -112,14 +110,12 @@ public class MoviesController {
             summary = "Find movie by id",
             description = "Returns detailed single movies information"
     )
-    @GetMapping("{id}")
-    public MovieDetailsResponse getMovieById(
-            @Parameter(
-                    description = "Movie ID",
-                    required = false
-            )
-            @PathVariable("id") Integer id
-    ) {
-        return moviesService.getMovieById(id);
-    }
+        @GetMapping("{id}")
+        public MovieDetailsResponse getMovieById(
+                @Parameter(description = "Movie ID")
+                @Positive
+                @PathVariable("id") Integer id
+        ) {
+            return moviesService.getMovieById(id);
+        }
 }

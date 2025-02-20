@@ -51,7 +51,7 @@ public class MoviesService {
      * @return list of movies
      */
     public List<MovieListResponse> getPopularMovies(Integer page) {
-        var pageRequest = PageRequest.of(page == null ? 0 : page, 50)
+        var pageRequest = PageRequest.of(page == null ? 0 : page - 1, 50)
                 .withSort(Sort.by("ratingScore").descending());
         var movies = moviesRepository.findAll(pageRequest);
         return movies.stream()
@@ -89,10 +89,12 @@ public class MoviesService {
             default -> "id";
         };
         var sort = Sort.by(sortColumn);
-        sort = switch (searchMoviesRequest.sortDirection()) {
-            case ASC -> sort.ascending();
-            case DESC -> sort.descending();
-        };
+        if (searchMoviesRequest.sortDirection() != null) {
+            sort = switch (searchMoviesRequest.sortDirection()) {
+                case ASC -> sort.ascending();
+                case DESC -> sort.descending();
+            };
+        }
         return sort;
     }
 
