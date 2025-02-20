@@ -29,7 +29,7 @@ public class MoviesServiceIntegrationTests {
 
     @Test
     public void testGetMovieById_expectToBeSuccessful() {
-        var movie = restTemplate.getForObject("/movies/1?apiKey=9c7ede34-372e-4744-80bd-0ab59f835924", MovieDetailsResponse.class);
+        var movie = restTemplate.getForObject("/movies/1?api_key=9c7ede34-372e-4744-80bd-0ab59f835924", MovieDetailsResponse.class);
 
         Assertions.assertNotNull(movie);
         Assertions.assertEquals("Mad Max: Fury Road", movie.title());
@@ -44,13 +44,13 @@ public class MoviesServiceIntegrationTests {
 
     @Test
     public void testGetMovieById_notExistingMovie_expectProperErrorCode() {
-        var movie = restTemplate.getForEntity("/movies/1000?apiKey=9c7ede34-372e-4744-80bd-0ab59f835924", MovieDetailsResponse.class);
+        var movie = restTemplate.getForEntity("/movies/1000?api_key=9c7ede34-372e-4744-80bd-0ab59f835924", MovieDetailsResponse.class);
         Assertions.assertEquals(HttpServletResponse.SC_NOT_FOUND, movie.getStatusCode().value());
     }
 
     @Test
     public void testGetMovieById_invalidId_expectProperErrorCode() {
-        var movie = restTemplate.getForEntity("/movies/-1?apiKey=9c7ede34-372e-4744-80bd-0ab59f835924", MovieDetailsResponse.class);
+        var movie = restTemplate.getForEntity("/movies/-1?api_key=9c7ede34-372e-4744-80bd-0ab59f835924", MovieDetailsResponse.class);
         Assertions.assertEquals(HttpServletResponse.SC_BAD_REQUEST, movie.getStatusCode().value());
     }
 
@@ -62,7 +62,7 @@ public class MoviesServiceIntegrationTests {
 
     @Test
     public void testGetPopularMovies_withoutPage_expectedToLoadFirstPage() {
-        MovieListResponse[] movies = restTemplate.getForObject("/movies/popular?apiKey=9c7ede34-372e-4744-80bd-0ab59f835924", MovieListResponse[].class);
+        MovieListResponse[] movies = restTemplate.getForObject("/movies/popular?api_key=9c7ede34-372e-4744-80bd-0ab59f835924", MovieListResponse[].class);
         Assertions.assertNotNull(movies);
         Assertions.assertEquals(50, movies.length);
         Assertions.assertEquals(9.3, movies[0].averageRating());
@@ -75,7 +75,7 @@ public class MoviesServiceIntegrationTests {
 
     @Test
     public void testGetPopularMovies_withPage_expectedToLoadChosenPage() {
-        MovieListResponse[] movies = restTemplate.getForObject("/movies/popular?page=2&apiKey=9c7ede34-372e-4744-80bd-0ab59f835924", MovieListResponse[].class);
+        MovieListResponse[] movies = restTemplate.getForObject("/movies/popular?page=2&api_key=9c7ede34-372e-4744-80bd-0ab59f835924", MovieListResponse[].class);
         Assertions.assertNotNull(movies);
         Assertions.assertEquals(42, movies.length);
         Assertions.assertEquals(8.1, movies[0].averageRating());
@@ -88,7 +88,7 @@ public class MoviesServiceIntegrationTests {
 
     @Test
     public void testGetPopularMovies_notExistsPage_expectedEmptyResult() {
-        MovieListResponse[] movies = restTemplate.getForObject("/movies/popular?page=3&apiKey=9c7ede34-372e-4744-80bd-0ab59f835924", MovieListResponse[].class);
+        MovieListResponse[] movies = restTemplate.getForObject("/movies/popular?page=3&api_key=9c7ede34-372e-4744-80bd-0ab59f835924", MovieListResponse[].class);
         Assertions.assertNotNull(movies);
         Assertions.assertEquals(0, movies.length);
     }
@@ -96,7 +96,7 @@ public class MoviesServiceIntegrationTests {
 
     @Test
     public void testGetPopularMovies_notExistsPage_invalidPage_expectProperErrorCode() {
-        var movie = restTemplate.getForEntity("/movies/popular?page=-1&apiKey=9c7ede34-372e-4744-80bd-0ab59f835924", MovieDetailsResponse.class);
+        var movie = restTemplate.getForEntity("/movies/popular?page=-1&api_key=9c7ede34-372e-4744-80bd-0ab59f835924", MovieDetailsResponse.class);
         Assertions.assertEquals(HttpServletResponse.SC_BAD_REQUEST, movie.getStatusCode().value());
     }
 
@@ -109,7 +109,7 @@ public class MoviesServiceIntegrationTests {
     @Test
     public void testSearchMovies_withOnlySearchQuery_expectedToFilterResultsAndDefaultOrderByIdAscending() {
         MovieListResponse[] movies = restTemplate.getForObject(
-                "/movies/search?query=the&apiKey=9c7ede34-372e-4744-80bd-0ab59f835924",
+                "/movies/search?query=the&api_key=9c7ede34-372e-4744-80bd-0ab59f835924",
                 MovieListResponse[].class
         );
         Assertions.assertNotNull(movies);
@@ -125,7 +125,7 @@ public class MoviesServiceIntegrationTests {
     @Test
     public void testSearchMovies_withoutSearchQuery_expectedProperErrorCode() {
         var movies = restTemplate.getForEntity(
-                "/movies/search?apiKey=9c7ede34-372e-4744-80bd-0ab59f835924",
+                "/movies/search?api_key=9c7ede34-372e-4744-80bd-0ab59f835924",
                 String.class
         );
         Assertions.assertEquals(HttpServletResponse.SC_BAD_REQUEST, movies.getStatusCode().value());
@@ -135,7 +135,7 @@ public class MoviesServiceIntegrationTests {
     @SneakyThrows
     public void testSearchMovies_withSearchQueryAndFilterByReleaseDateFromByOnlyYear_expectedProperResults() {
         MovieListResponse[] movies = restTemplate.getForObject(
-                "/movies/search?query=the&filter_date_from=2008&apiKey=9c7ede34-372e-4744-80bd-0ab59f835924",
+                "/movies/search?query=the&filter_date_from=2008&api_key=9c7ede34-372e-4744-80bd-0ab59f835924",
                 MovieListResponse[].class
         );
         Assertions.assertNotNull(movies);
@@ -155,7 +155,7 @@ public class MoviesServiceIntegrationTests {
     @SneakyThrows
     public void testSearchMovies_withSearchQueryAndFilterByReleaseDateFromByYearAndMonth_expectedProperResults() {
         MovieListResponse[] movies = restTemplate.getForObject(
-                "/movies/search?query=the&filter_date_from=2009-07&apiKey=9c7ede34-372e-4744-80bd-0ab59f835924",
+                "/movies/search?query=the&filter_date_from=2009-07&api_key=9c7ede34-372e-4744-80bd-0ab59f835924",
                 MovieListResponse[].class
         );
         Assertions.assertNotNull(movies);
@@ -175,7 +175,7 @@ public class MoviesServiceIntegrationTests {
     @SneakyThrows
     public void testSearchMovies_withSearchQueryAndFilterByReleaseDateFromByFullDate_expectedProperResults() {
         MovieListResponse[] movies = restTemplate.getForObject(
-                "/movies/search?query=the&filter_date_from=2009-11-25&apiKey=9c7ede34-372e-4744-80bd-0ab59f835924",
+                "/movies/search?query=the&filter_date_from=2009-11-25&api_key=9c7ede34-372e-4744-80bd-0ab59f835924",
                 MovieListResponse[].class
         );
         Assertions.assertNotNull(movies);
@@ -194,7 +194,7 @@ public class MoviesServiceIntegrationTests {
     @SneakyThrows
     public void testSearchMovies_withSearchQueryAndFilterByReleaseDateToByOnlyYear_expectedProperResults() {
         MovieListResponse[] movies = restTemplate.getForObject(
-                "/movies/search?query=the&filter_date_from=2008&&filter_date_to=2014&apiKey=9c7ede34-372e-4744-80bd-0ab59f835924",
+                "/movies/search?query=the&filter_date_from=2008&&filter_date_to=2014&api_key=9c7ede34-372e-4744-80bd-0ab59f835924",
                 MovieListResponse[].class
         );
         Assertions.assertNotNull(movies);
@@ -216,7 +216,7 @@ public class MoviesServiceIntegrationTests {
     @SneakyThrows
     public void testSearchMovies_withSearchQueryAndFilterByReleaseDateToByYearAndMonth_expectedProperResults() {
         MovieListResponse[] movies = restTemplate.getForObject(
-                "/movies/search?query=the&filter_date_from=2008&filter_date_to=2014-07&apiKey=9c7ede34-372e-4744-80bd-0ab59f835924",
+                "/movies/search?query=the&filter_date_from=2008&filter_date_to=2014-07&api_key=9c7ede34-372e-4744-80bd-0ab59f835924",
                 MovieListResponse[].class
         );
         Assertions.assertNotNull(movies);
@@ -238,7 +238,7 @@ public class MoviesServiceIntegrationTests {
     @SneakyThrows
     public void testSearchMovies_withSearchQueryAndFilterByReleaseDateToByFullDate_expectedProperResults() {
         MovieListResponse[] movies = restTemplate.getForObject(
-                "/movies/search?query=the&filter_date_from=2008&filter_date_to=2014-11-25&apiKey=9c7ede34-372e-4744-80bd-0ab59f835924",
+                "/movies/search?query=the&filter_date_from=2008&filter_date_to=2014-11-25&api_key=9c7ede34-372e-4744-80bd-0ab59f835924",
                 MovieListResponse[].class
         );
         Assertions.assertNotNull(movies);
@@ -259,7 +259,7 @@ public class MoviesServiceIntegrationTests {
     @Test
     public void testSearchMovies_withOnlySearchQueryAndDescending_expectedProperResults() {
         MovieListResponse[] movies = restTemplate.getForObject(
-                "/movies/search?query=the&sort_dir=desc&apiKey=9c7ede34-372e-4744-80bd-0ab59f835924",
+                "/movies/search?query=the&sort_dir=desc&api_key=9c7ede34-372e-4744-80bd-0ab59f835924",
                 MovieListResponse[].class
         );
         Assertions.assertNotNull(movies);
@@ -276,7 +276,7 @@ public class MoviesServiceIntegrationTests {
     @SneakyThrows
     public void testSearchMovies_withOnlySearchQueryAndSortByReleaseDateAndDescending_expectedProperResults() {
         MovieListResponse[] movies = restTemplate.getForObject(
-                "/movies/search?query=the&sort_by=releaseDate&sort_dir=desc&apiKey=9c7ede34-372e-4744-80bd-0ab59f835924",
+                "/movies/search?query=the&sort_by=releaseDate&sort_dir=desc&api_key=9c7ede34-372e-4744-80bd-0ab59f835924",
                 MovieListResponse[].class
         );
         Assertions.assertNotNull(movies);
@@ -294,7 +294,7 @@ public class MoviesServiceIntegrationTests {
     @SneakyThrows
     public void testSearchMovies_withOnlySearchQueryAndSortByAverageRatingAndDescending_expectedProperResults() {
         MovieListResponse[] movies = restTemplate.getForObject(
-                "/movies/search?query=the&sort_by=averageRating&sort_dir=desc&apiKey=9c7ede34-372e-4744-80bd-0ab59f835924",
+                "/movies/search?query=the&sort_by=averageRating&sort_dir=desc&api_key=9c7ede34-372e-4744-80bd-0ab59f835924",
                 MovieListResponse[].class
         );
         Assertions.assertNotNull(movies);

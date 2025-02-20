@@ -20,10 +20,10 @@ public class SwaggerConfig {
                         .title("Movie API")
                         .version("1.0")
                         .description("API Documentation with API Key Authentication"))
-                .addSecurityItem(new SecurityRequirement().addList("apiKey"))
+                .addSecurityItem(new SecurityRequirement().addList("api_key"))
                 .components(new io.swagger.v3.oas.models.Components()
-                        .addSecuritySchemes("apiKey", new SecurityScheme()
-                                .name("apiKey")   // The parameter name
+                        .addSecuritySchemes("api_key", new SecurityScheme()
+                                .name("api_key")   // The parameter name
                                 .type(SecurityScheme.Type.APIKEY)
                                 .in(SecurityScheme.In.QUERY)
                         ));

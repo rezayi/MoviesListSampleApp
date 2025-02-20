@@ -130,7 +130,7 @@ public class MoviesServiceUnitTests {
     }
 
     @Test
-    public void testSearchMovies_onlyQuery() {
+    public void testSearchMovies_onlyQuery_testSortAndPagination() {
         ArgumentCaptor<Specification<MovieEntity>> specificationCaptor = ArgumentCaptor.forClass(Specification.class);
         ArgumentCaptor<PageRequest> pageRequestCaptor = ArgumentCaptor.forClass(PageRequest.class);
 
@@ -140,12 +140,14 @@ public class MoviesServiceUnitTests {
 
         moviesService.searchMovies(SearchMoviesRequest.builder()
                 .query("test")
-                .sortBy("title")
+                .sortBy("id")
                 .sortDirection(Sort.Direction.ASC)
                 .build());
 
         //check page request
-        Assertions.assertTrue(pageRequestCaptor.getValue().getSort().isSorted());
+        Sort expectedSort = Sort.by(Sort.Direction.ASC, "id");
+        Assertions.assertEquals(expectedSort, pageRequestCaptor.getValue().getSort());
+
         Assertions.assertEquals(0, pageRequestCaptor.getValue().getPageNumber());
         Assertions.assertEquals(10, pageRequestCaptor.getValue().getPageSize());
     }

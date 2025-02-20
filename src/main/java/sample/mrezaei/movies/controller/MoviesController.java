@@ -74,17 +74,19 @@ public class MoviesController {
             @RequestParam(name = "sort_dir", required = false, defaultValue = "asc") String sortDirection,
 
             @Parameter(
-                    description = "filter by date start. if you don't set day or month it will set it to the first day",
+                    description = "filter by date start. if you don't set day or month it will set it to the first day." +
+                            "It will accept any of these formats: 2025-12-31 , 2025-12 , 2024",
                     required = false,
-                    example = "2025-01-01 , 2025-01 , 2024"
+                    example = "2025-01-01"
             )
             @Pattern(regexp = "^([0-9]{4})?(-[0-9]{2})?(-[0-9]{2})?$", message = "date format is invalid")
             @RequestParam(name = "filter_date_from", required = false) String dateFrom,
 
             @Parameter(
-                    description = "filter by date end. if you don't set day or month it will set it to the last day",
+                    description = "filter by date end. if you don't set day or month it will set it to the last day." +
+                            "It will accept any of these formats: 2025-12-31 , 2025-12 , 2024",
                     required = false,
-                    example = "2025-12-31 , 2025-12 , 2024"
+                    example = "2025-12-31"
             )
             @Pattern(regexp = "^([0-9]{4})?(-[0-9]{2})?(-[0-9]{2})?$", message = "date format is invalid")
             @RequestParam(name = "filter_date_to", required = false) String dateTo,

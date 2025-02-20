@@ -44,7 +44,7 @@ public class AccessControlConfiguration extends OncePerRequestFilter {
             FilterChain filterChain)
             throws ServletException, IOException {
         var apiKey = request.getParameterMap().entrySet().stream()
-                .filter(entry -> entry.getKey().equals("apiKey"))
+                .filter(entry -> entry.getKey().equals("api_key"))
                 .map(Map.Entry::getValue)
                 .findFirst();
         if (apiKey.isEmpty() || !apiKeyService.isValidApiKey(apiKey.get()[0])) {
