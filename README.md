@@ -25,7 +25,10 @@ The selected database for this project is `PostgreSQL`.
 ### Authentication
 
 In this project we used API key authentication. <br>
-Access to all Rest APIs requires a valid API Key.
+Access to all Rest APIs requires a valid API Key.<br>
+To Authorize in Swagger UI, click on the `Authorize` key on top right part of swagger ui.
+![Authorize.png](documentation_images/Authorize.png)
+
 
 ### Setup the project
 
@@ -62,3 +65,10 @@ sudo snap install docker
 ```
 
 ### Demo
+The project has been deployed on this address:<br>
+
+http://194.5.192.219/swagger-ui/index.html
+
+#### Note: 
+Accessing to APIs requires API key.
+[Email me](mailto://m.rezayi69@gmail.com), if you need it.
